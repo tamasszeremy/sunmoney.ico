@@ -11,7 +11,7 @@
 			if(contribution==0) throw;
 			if(keccak256("ethereum")==keccak256(types)){
 				///case 1 of 30 %
-				if(contribution<1*10**17) throw;
+				if(contribution<1*10**16) throw;
 				if(now>=1520985600 && now<1521072000){
 					return 30;
 				}else if(now>=1521072000 && now<1521936000){
@@ -26,16 +26,16 @@
 					return 0;
 				}
 			}else if(keccak256("bitcoin")==keccak256(types)){
-				if(contribution < 45*10**4) throw;
-				if(now>=1 && now<2){
+				if(contribution < 45*10**3) throw;
+				if(now>=1520985600 && now<1521072000){
 					return 30;
-				}else if(now>=1 && now<2){
+				}else if(now>=1521072000 && now<1521936000){
 					return 25;
-				}else if(now>=1 && now<2){
+				}else if(now>=1521936000 && now<1522540800){
 					return 15;
-				}else if(now>=1 && now<2){
+				}else if(now>=1522540800 && now<1522886400){
 					return 10;
-				}else if(now>=1 && now<2){
+				}else if(now>=1522886400 && now<1523750400){
 					return 0;
 				}else{
 					return 0;

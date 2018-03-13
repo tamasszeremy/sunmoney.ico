@@ -29,6 +29,8 @@ contract PublicICO is Ownable,Pausable,PricingStrategyPublic,Utils,Sales{
         endDate = _new;
     }
 
+    address public ownerAddr = 0x4cA09B312F23b390450D902B21c7869AA64877E3;
+
     uint256  public numberOfBackers;
     /* Max investment count when we are still allowed to change the multisig address */
     ///the txorigin is the web3.eth.coinbase account
@@ -50,9 +52,11 @@ contract PublicICO is Ownable,Pausable,PricingStrategyPublic,Utils,Sales{
     event logaddr(address addr);
 
     //the constructor function
-   function PublicICO(address tokenAddress){
+   function PublicICO(address tokenAddress,uint256 startdate,uint256 enddate){
         //require(bytes(_name).length > 0 && bytes(_symbol).length > 0); // validate input
         token = SMTToken(tokenAddress);
+        startDate = startdate;
+        endDate = enddate;
         tokensPerEther = token.tokensPerEther();
         tokensPerBTC = token.tokensPerBTC();
         valueToBeSent = token.valueToBeSent();
@@ -79,9 +83,11 @@ contract PublicICO is Ownable,Pausable,PricingStrategyPublic,Utils,Sales{
        initialSupply = SafeMath.add(initialSupply,totalTokens);
        maxTokenpublic = SafeMath.sub(maxTokenpublic,totalTokens);
        token.addToBalances(msg.sender,totalTokens);
-       Transfer(token,msg.sender,totalTokens);
+       // Transfer(token,msg.sender,totalTokens);
        token.increaseEthRaised(msg.value);
        numberOfBackers++;
+       if(!ownerAddr.send(msg.value))throw;
+
     }
 
 
@@ -109,7 +115,7 @@ contract PublicICO is Ownable,Pausable,PricingStrategyPublic,Utils,Sales{
         initialSupply = SafeMath.add(initialSupply,totalTokens);
         maxTokenpublic = SafeMath.sub(maxTokenpublic,totalTokens);
         token.addToBalances(addr,totalTokens);
-        Transfer(token,addr,totalTokens);
+        // Transfer(token,addr,totalTokens);
         token.increaseEthRaised(value);
         numberOfBackers++;
         transactionsClaimed[txHash] = true;
@@ -147,7 +153,7 @@ contract PublicICO is Ownable,Pausable,PricingStrategyPublic,Utils,Sales{
         initialSupply = SafeMath.add(initialSupply,totalTokens);
         maxTokenpublic = SafeMath.sub(maxTokenpublic,totalTokens);
         token.addToBalances(addr,totalTokens);
-        Transfer(token,addr,totalTokens);
+        // Transfer(token,addr,totalTokens);
         numberOfBackers++;
         token.increaseBTCRaised(value);
     }

@@ -1,4 +1,4 @@
-pragma solidity ^0.4.10;
+    pragma solidity ^0.4.10;
 import './SMTToken.sol';
 import './Pausable.sol';
 import './BTC.sol';
