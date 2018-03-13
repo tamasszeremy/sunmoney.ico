@@ -1,0 +1,1 @@
+# sunmoney.ico
